@@ -1,5 +1,7 @@
 import '@/styles/globals.css'
 import '@/styles/view-transition.css'
+import '@/styles/mapbox.css'
+
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
