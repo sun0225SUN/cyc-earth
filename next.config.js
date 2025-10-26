@@ -5,8 +5,32 @@
 import './src/env.js'
 import createNextIntlPlugin from 'next-intl/plugin'
 
-/** @type {import("next").NextConfig} */
-const nextConfig = {}
-
 const withNextIntl = createNextIntlPlugin()
-export default withNextIntl(nextConfig)
+
+/** @type {import("next").NextConfig} */
+const config = {
+  output: 'standalone',
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
+  },
+}
+
+export default withNextIntl(config)
