@@ -11,7 +11,7 @@
 # database
 /prisma/db.sqlite
 /prisma/db.sqlite-journal
-db.sqlite
+/data/db.sqlite
 
 # next.js
 /.next/
@@ -44,3 +44,6 @@ yarn-error.log*
 
 # idea files
 .idea
+
+# python
+/scripts/__pycache__/
