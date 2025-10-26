@@ -1,8 +1,9 @@
 import '@/styles/globals.css'
-
+import '@/styles/view-transition.css'
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
-
+import { ThemeProvider } from '@/components/theme/provider'
+import { cn } from '@/lib/utils'
 import { TRPCReactProvider } from '@/trpc/react'
 
 export const metadata: Metadata = {
@@ -22,10 +23,20 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={`${geist.variable}`}
+      suppressHydrationWarning
+      className={cn(geist.variable)}
     >
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   )
