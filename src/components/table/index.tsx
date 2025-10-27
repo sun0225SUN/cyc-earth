@@ -1,7 +1,7 @@
 'use client'
 
 import { useLocale, useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useActivityStore } from '@/stores/use-activity-store'
 import { api } from '@/trpc/react'
 
 const ITEMS_PER_PAGE = 10
@@ -20,7 +21,34 @@ export function DataTable() {
   const t = useTranslations('table')
   const locale = useLocale()
   const [currentPage, setCurrentPage] = useState(1)
+  const tableRef = useRef<HTMLDivElement>(null)
   const { data: activities, isLoading } = api.activities.getAll.useQuery()
+
+  const setSelectedActivityId = useActivityStore(
+    (state) => state.setSelectedActivityId,
+  )
+
+  const storeSelectedId = useActivityStore((state) => state.selectedActivityId)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        tableRef.current &&
+        !tableRef.current.contains(event.target as Node)
+      ) {
+        setSelectedActivityId(null)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [setSelectedActivityId])
+
+  const handleRowClick = (activityId: number) => {
+    setSelectedActivityId(activityId)
+  }
 
   const formatDistance = (meters?: number | null) => {
     if (!meters) return '-'
@@ -46,7 +74,6 @@ export function DataTable() {
     )
   }
 
-  // 分页逻辑
   const totalPages = activities
     ? Math.ceil(activities.length / ITEMS_PER_PAGE)
     : 0
@@ -57,7 +84,6 @@ export function DataTable() {
       )
     : []
 
-  // 分页信息
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE + 1
   const endIndex = Math.min(
     currentPage * ITEMS_PER_PAGE,
@@ -96,7 +122,10 @@ export function DataTable() {
   }
 
   return (
-    <div className='mb-10 w-full space-y-5'>
+    <div
+      ref={tableRef}
+      className='mb-10 w-full space-y-5'
+    >
       <Table>
         <TableHeader>
           <TableRow>
@@ -110,7 +139,12 @@ export function DataTable() {
 
         <TableBody>
           {paginatedData.map((activity) => (
-            <TableRow key={activity.id}>
+            <TableRow
+              key={activity.id}
+              onClick={() => handleRowClick(activity.id)}
+              className='cursor-pointer transition-colors hover:bg-muted/50 data-[selected=true]:bg-muted'
+              data-selected={storeSelectedId === activity.id}
+            >
               <TableCell className='text-center'>
                 {activity.name || '-'}
               </TableCell>
@@ -133,7 +167,6 @@ export function DataTable() {
         </TableBody>
       </Table>
 
-      {/* 分页控件 */}
       <div className='flex items-center justify-between'>
         <p className='text-muted-foreground text-sm'>{pageInfo}</p>
         <div className='flex gap-2'>
