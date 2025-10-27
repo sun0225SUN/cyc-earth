@@ -1,7 +1,8 @@
 <div align="center">
   <img src="./readme/images/logo.png" alt="screenshot" width="100" />
-  <h1>CYC</h1>
-  <p><strong>Create a personal cycling home page</strong></p>
+  <h2>Create a personal cycling home page</h2>
+
+  English | [简体中文](/README_zh.md)
 
   <img alt="GitHub License" src="https://img.shields.io/github/license/sun0225SUN/cyc-earth">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/sun0225SUN/cyc-earth?style=flat">
@@ -9,8 +10,6 @@
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/sun0225SUN/cyc-earth">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/sun0225SUN/cyc-earth">
   <img alt="Page views" src="https://komarev.com/ghpvc/?username=cyc-earth&label=Views&color=orange&style=flat" />
-
-  English | [简体中文](/README_zh.md)
 
   <!-- <img src="./readme/images/preview.png" alt="screenshot" /> -->
 </div>
