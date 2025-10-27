@@ -12,18 +12,37 @@ const globalForDb = globalThis as unknown as {
   client: Client | undefined
 }
 
-export const client =
-  env.DATABASE_PROVIDER === 'turso'
-    ? (globalForDb.client ??
-      createClient({
-        url: env.TURSO_DATABASE_URL!,
-        authToken: env.TURSO_DATABASE_TOKEN!,
-      }))
-    : (globalForDb.client ??
-      createClient({
-        url: env.DATABASE_URL!,
-      }))
+const isTurso = () => {
+  return !!env.TURSO_DATABASE_URL && env.TURSO_DATABASE_TOKEN !== null
+}
 
-if (env.NODE_ENV !== 'production') globalForDb.client = client
+const createTursoClient = () => {
+  return createClient({
+    url: env.TURSO_DATABASE_URL!,
+    authToken: env.TURSO_DATABASE_TOKEN!,
+  })
+}
+
+const createLocalClient = () => {
+  return createClient({
+    url: 'file:./db.sqlite',
+  })
+}
+
+const createDatabaseClient = () => {
+  if (env.NODE_ENV !== 'production' && globalForDb.client) {
+    return globalForDb.client
+  }
+
+  const newClient = isTurso() ? createTursoClient() : createLocalClient()
+
+  if (env.NODE_ENV !== 'production') {
+    globalForDb.client = newClient
+  }
+
+  return newClient
+}
+
+export const client = createDatabaseClient()
 
 export const db = drizzle(client, { schema })

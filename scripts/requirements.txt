@@ -19,4 +19,5 @@ stravalib==2.4
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.2
-urllib3==2.5.0
+urllib3==1.26.20
+black==25.9.0

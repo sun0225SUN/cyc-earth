@@ -15,8 +15,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CLIENT_SECRET = os.getenv('STRAVA_CLIENT_SECRET')
-CLIENT_ID = os.getenv('STRAVA_CLIENT_ID')
+CLIENT_SECRET = os.getenv("STRAVA_CLIENT_SECRET")
+CLIENT_ID = os.getenv("STRAVA_CLIENT_ID")
 
 
 def get_refresh_token_from_url(url):
@@ -32,21 +32,19 @@ def get_refresh_token_from_url(url):
         # Extract authorization code from URL
         code = re.search(r"code=.*&", url)
         if not code:
-            raise Exception('Invalid callback URL')
+            raise Exception("Invalid callback URL")
 
         code = code.group()[5:-1]
 
         # Exchange authorization code for access token
         client = Client()
         token_data = client.exchange_code_for_token(
-            client_id=CLIENT_ID,
-            client_secret=CLIENT_SECRET,
-            code=code
+            client_id=CLIENT_ID, client_secret=CLIENT_SECRET, code=code
         )
 
         return token_data
     except Exception as e:
-        raise Exception(f'Error getting access token: {e}')
+        raise Exception(f"Error getting access token: {e}")
 
 
 def get_access_token_from_refresh_token(refresh_token):
@@ -63,9 +61,7 @@ def get_access_token_from_refresh_token(refresh_token):
     print("\n🔄 Refreshing access token...")
 
     token_data = client.refresh_access_token(
-        client_id=CLIENT_ID,
-        client_secret=CLIENT_SECRET,
-        refresh_token=refresh_token
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, refresh_token=refresh_token
     )
 
     print("\n✅ Access token refreshed successfully")
@@ -88,8 +84,7 @@ def authenticate():
     print()
 
     # After authorization, Strava will redirect to your callback URL, copy the full URL
-    callback_url = input(
-        "Please enter the full callback URL after authorization: ")
+    callback_url = input("Please enter the full callback URL after authorization: ")
 
     try:
         token_data = get_refresh_token_from_url(callback_url)

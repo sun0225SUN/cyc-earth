@@ -7,8 +7,6 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_PROVIDER: z.enum(['sqlite', 'turso']),
-    DATABASE_URL: z.string().url().optional(),
     TURSO_DATABASE_URL: z.string().url().optional(),
     TURSO_DATABASE_TOKEN: z.string().optional().nullable(),
     NODE_ENV: z
@@ -23,6 +21,8 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: z.string(),
+    NEXT_PUBLIC_UMAMI_ANALYTICS_ID: z.string().optional(),
+    NEXT_PUBLIC_UMAMI_ANALYTICS_JS: z.string().optional(),
   },
 
   /**
@@ -30,13 +30,13 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    DATABASE_PROVIDER: process.env.DATABASE_PROVIDER,
-    DATABASE_URL: process.env.DATABASE_URL,
     TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
     TURSO_DATABASE_TOKEN: process.env.TURSO_DATABASE_TOKEN,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN:
       process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+    NEXT_PUBLIC_UMAMI_ANALYTICS_ID: process.env.NEXT_PUBLIC_UMAMI_ANALYTICS_ID,
+    NEXT_PUBLIC_UMAMI_ANALYTICS_JS: process.env.NEXT_PUBLIC_UMAMI_ANALYTICS_JS,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

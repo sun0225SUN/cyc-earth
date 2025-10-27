@@ -5,6 +5,7 @@ import '@/styles/mapbox.css'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { Analytics } from '@/components/common/analytics'
 import { ThemeProvider } from '@/components/theme/provider'
 import { geist } from '@/fonts'
 import { routing } from '@/i18n/routing'
@@ -45,6 +46,7 @@ export default async function RootLayout({ children, params }: Props) {
               disableTransitionOnChange
             >
               {children}
+              <Analytics />
             </ThemeProvider>
           </TRPCReactProvider>
         </NextIntlClientProvider>

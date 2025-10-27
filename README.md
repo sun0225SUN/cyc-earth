@@ -77,16 +77,6 @@
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/sun0225SUN/camlife)
 
-### Docker
-
-1. Create a `.env` file in the root directory
-
-2. Docker Compose
-
-```bash
-docker-compose up -d
-```
-
 > [!warning]
 > Please ensure that all necessary environment variables are correctly configured before running the project.
 

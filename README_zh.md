@@ -66,16 +66,6 @@
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/sun0225SUN/camlife)
 
-### Docker
-
-1. 在根目录创建 `.env` 文件
-
-2. 使用 Docker Compose
-
-```bash
-docker-compose up -d
-```
-
 > [!warning]
 > 请确保在运行项目之前正确配置所有必要的环境变量。
 
