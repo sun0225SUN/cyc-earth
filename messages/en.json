@@ -5,5 +5,18 @@
   },
   "common": {
     "title": "Hello World"
+  },
+  "table": {
+    "loading": "Loading...",
+    "noData": "No data",
+    "caption": "Activities",
+    "activityName": "Activity",
+    "date": "Date",
+    "distance": "Distance",
+    "movingTime": "Time",
+    "elevationGain": "Elevation",
+    "previous": "Previous",
+    "next": "Next",
+    "pageInfo": "Showing {start} - {end} of {total}"
   }
 }
