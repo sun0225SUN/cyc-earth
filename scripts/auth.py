@@ -19,7 +19,7 @@ CLIENT_SECRET = os.getenv('STRAVA_CLIENT_SECRET')
 CLIENT_ID = os.getenv('STRAVA_CLIENT_ID')
 
 
-def get_access_token_from_url(url):
+def get_refresh_token_from_url(url):
     """Get access token from Strava callback URL
 
     Args:
@@ -49,7 +49,7 @@ def get_access_token_from_url(url):
         raise Exception(f'Error getting access token: {e}')
 
 
-def obtain_access_token(refresh_token):
+def get_access_token_from_refresh_token(refresh_token):
     """Obtain a new access token using refresh token
 
     Args:
@@ -59,11 +59,17 @@ def obtain_access_token(refresh_token):
         dict: Token data containing access_token, refresh_token, expires_at
     """
     client = Client()
+
+    print("\n🔄 Refreshing access token...")
+
     token_data = client.refresh_access_token(
         client_id=CLIENT_ID,
         client_secret=CLIENT_SECRET,
         refresh_token=refresh_token
     )
+
+    print("\n✅ Access token refreshed successfully")
+
     return token_data
 
 
@@ -73,7 +79,7 @@ def authenticate():
         print("❌ Please set STRAVA_CLIENT_ID in the .env file first")
         return
 
-    authorize_url = f"http://www.strava.com/oauth/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read,activity:read"
+    authorize_url = f"http://www.strava.com/oauth/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read_all,profile:read_all,activity:read_all,profile:write,activity:write"
 
     print("\nPlease visit the following URL to authorize:")
     print("=" * 80)
@@ -86,7 +92,7 @@ def authenticate():
         "Please enter the full callback URL after authorization: ")
 
     try:
-        token_data = get_access_token_from_url(callback_url)
+        token_data = get_refresh_token_from_url(callback_url)
 
         print("\n✅ Authentication successful!")
         print("\nPlease add the following information to the .env file:")
