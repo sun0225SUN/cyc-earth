@@ -41,16 +41,9 @@
 - 📊 流量分析 - [Umami](https://umami.is) &  [@vercel/analytics](https://vercel.com/docs/analytics/quickstart?package-manager=bun)
 
 
-## 👥 贡献者
-
-<!-- readme: collaborators,contributors -start -->
-
-<!-- readme: collaborators,contributors -end -->
-
 ## 🍭 社区
 
-- [Discord](https://discord.com/invite/fxARGMmg)
-- [Telegram](https://t.me/sunguoqi)
+- [Telegram](https://t.me/guoqisun)
 
 ## 💡 灵感来源
 
@@ -159,7 +152,7 @@ bun run dev
 
 ## 📊 仓库状态
 
-![Alt](https://repobeats.axiom.co/api/embed/df4c48ad1ab928ba118d1e7a2a5083e3c9ffd665.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/5bf76cc50e06bd4f528bff6e897c9aebf53bd931.svg "Repobeats analytics image")
 
 ## ⭐ Star 历史
 
