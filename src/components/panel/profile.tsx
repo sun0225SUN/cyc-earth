@@ -5,17 +5,28 @@ export async function PanelProfile() {
   const athlete = await api.athlete.getAthlete()
 
   return (
-    <h1 className='flex flex-col gap-2'>
-      <Avatar className='size-16'>
-        <AvatarImage
-          src={athlete?.profile ?? ''}
-          alt='avatar'
-        />
-        <AvatarFallback>{athlete?.firstname?.[0] ?? ''}</AvatarFallback>
-      </Avatar>
-      <p className='font-bold text-xl'>
-        {athlete?.firstname} {athlete?.lastname}
-      </p>
-    </h1>
+    <div className="rounded-xl overflow-hidden border border-border bg-card p-6">
+      <div className="flex flex-col items-center gap-4">
+        <Avatar className="size-24 border-4 border-background shadow-md">
+          <AvatarImage
+            src={athlete?.profile ?? ''}
+            alt="用户头像"
+            className="object-cover"
+          />
+          <AvatarFallback className="text-xl font-semibold">
+            {athlete?.firstname?.[0] ?? ''}
+          </AvatarFallback>
+        </Avatar>
+        
+        <div className="text-center">
+          <h1 className="text-2xl font-bold tracking-tight">
+            {athlete?.firstname} {athlete?.lastname}
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            骑行爱好者
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
