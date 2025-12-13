@@ -17,12 +17,21 @@ def get_client(token_data):
     )
 
 
-def get_activities_from_db():
+def get_activities_from_db(days=None):
     conn = db.get_connection()
 
     try:
-        query = "SELECT id FROM cyc_earth_activity ORDER BY startDate DESC"
-        result = db.execute_query(conn, query)
+        if days:
+            # Calculate the date X days ago
+            from datetime import datetime, timedelta
+            since_date = (datetime.now() - timedelta(days=days)).isoformat()
+            query = "SELECT id FROM cyc_earth_activity WHERE startDate > ? ORDER BY startDate DESC"
+            params = (since_date,)
+        else:
+            query = "SELECT id FROM cyc_earth_activity ORDER BY startDate DESC"
+            params = ()
+            
+        result = db.execute_query(conn, query, params)
 
         # For Turso, result might be different
         if isinstance(result, dict):
@@ -219,9 +228,9 @@ def process_activity_track(client, access_token, activity_id):
         print(f"❌ Error processing activity {activity_id}: {e}", flush=True)
 
 
-def process_all_activities(token_data):
-    # Get all activity IDs from the database
-    activity_ids = get_activities_from_db()
+def process_all_activities(token_data, days=None):
+    # Get activity IDs from the database (optional: only recent days)
+    activity_ids = get_activities_from_db(days)
 
     client = get_client(token_data)
 

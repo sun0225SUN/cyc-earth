@@ -100,12 +100,20 @@ def get_athlete(token_data):
     db.save_athlete(athlete_dict)
 
 
-def get_activities(token_data):
+def get_activities(token_data, days=None):
     client = get_client(token_data)
 
     print(f"\n🔄 Fetching activities from Strava...", flush=True)
 
-    activities = client.get_activities()
+    # 如果提供了days参数，只获取最近days天的活动
+    if days:
+        from datetime import datetime, timedelta
+        after_date = datetime.now() - timedelta(days=days)
+        print(f"📅 Fetching activities from the last {days} days ({after_date.strftime('%Y-%m-%d')} onwards)...", flush=True)
+        activities = client.get_activities(after=after_date)
+    else:
+        print("📅 Fetching all activities...", flush=True)
+        activities = client.get_activities()
 
     count = 0
     total = 0
@@ -374,6 +382,12 @@ def get_activities(token_data):
 if __name__ == "__main__":
     print("🚀 Starting Strava data sync...", flush=True)
 
+    # 解析命令行参数
+    import argparse
+    parser = argparse.ArgumentParser(description='Sync Strava data')
+    parser.add_argument('--days', type=int, help='Number of days to fetch activities for (default: all)')
+    args = parser.parse_args()
+
     refresh_token = os.getenv("STRAVA_REFRESH_TOKEN")
 
     if not refresh_token:
@@ -386,9 +400,9 @@ if __name__ == "__main__":
     token_data = auth.get_access_token_from_refresh_token(refresh_token)
 
     get_athlete(token_data)
-    get_activities(token_data)
+    get_activities(token_data, args.days)
 
     print("\n🔄 Starting to process activity tracks...", flush=True)
-    process_activities_data.process_all_activities(token_data)
+    process_activities_data.process_all_activities(token_data, args.days)
 
     print("\n✅ All done!", flush=True)
