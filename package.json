@@ -23,7 +23,7 @@
   "dependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@libsql/client": "^0.15.15",
+    "@libsql/client": "^0.17.0",
     "@mapbox/mapbox-gl-language": "^1.0.1",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-popover": "^1.1.15",
@@ -37,10 +37,10 @@
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "drizzle-orm": "^0.44.7",
+    "drizzle-orm": "^0.45.1",
     "knip": "^5.66.3",
     "lefthook": "^2.0.1",
-    "lucide-react": "^0.552.0",
+    "lucide-react": "^0.563.0",
     "mapbox-gl": "^3.16.0",
     "next": "^16.0.0",
     "next-intl": "^4.4.0",
@@ -56,7 +56,7 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.2",
+    "@biomejs/biome": "2.3.13",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/mapbox-gl": "^3.4.1",
     "@types/node": "^24.9.1",
